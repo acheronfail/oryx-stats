@@ -1,0 +1,20 @@
+{
+  "name": "oryx-stats",
+  "version": "0.1.0",
+  "scripts": {
+    "get-layout-summaries": "ts-node src/get-layout-summaries.ts",
+    "get-layouts": "ts-node src/get-layouts.ts",
+    "generate-heatmap": "ts-node src/generate-heatmap.ts",
+    "print-layout": "ts-node src/print-layout.ts",
+    "start": "yarn get-layout-summaries && yarn get-layouts && yarn generate-heatmap"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@types/node": "^16.7.10",
+    "chalk": "^4.1.2",
+    "graphql": "^15.5.2",
+    "graphql-request": "^3.5.0",
+    "ts-node": "^10.2.1",
+    "typescript": "^4.4.2"
+  }
+}
