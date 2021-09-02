@@ -1,4 +1,3 @@
-
 export const moonlanderAsciiMap = `\
 ,----------------------------------------------------------------------------.           ,----------------------------------------------------------------------------.
 |    #0    |    #1    |    #2    |    #3    |    #4    |    #5    |    #6    |           |   #36    |   #37    |   #38    |   #39    |   #40    |   #41    |   #42    |
@@ -19,4 +18,5 @@ export const moonlanderAsciiMap = `\
                                                |          |          |          |       |          |          |          |
                                                \`--------------------------------'       \`--------------------------------'`;
 export const moonlanderAsciiMapWidth = moonlanderAsciiMap.split('\n')[0].length;
-export const padCenter = (s: string, n: number) => s.padStart(s.length + Math.floor((n - s.length) / 2), ' ').padEnd(n, ' ');
+export const padCenter = (s: string, n: number) =>
+  s.padStart(s.length + Math.floor((n - s.length) / 2), ' ').padEnd(n, ' ');

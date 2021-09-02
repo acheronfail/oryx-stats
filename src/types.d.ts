@@ -9,6 +9,20 @@ export interface SearchLayoutsByTagsVariables {
   geometry:  string;
 }
 
+export interface GetKeyDataResponse {
+  getKeyData: GetKeyData;
+}
+
+export interface GetKeyData {
+  keys: Key[];
+}
+
+export interface Key {
+  code:          string;
+  description:   null | string;
+  label:         null | string;
+  keyCategoryId: number;
+}
 
 export interface SearchLayoutsByTagsResponse {
   searchLayoutsByTags: SearchLayoutsByTags;

@@ -6,6 +6,7 @@
     "get-layouts": "ts-node src/get-layouts.ts",
     "generate-heatmap": "ts-node src/generate-heatmap.ts",
     "print-layout": "ts-node src/print-layout.ts",
+    "get-key-data": "ts-node src/get-key-data.ts",
     "start": "yarn get-layout-summaries && yarn get-layouts && yarn generate-heatmap"
   },
   "license": "MIT",

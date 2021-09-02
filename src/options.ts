@@ -1,3 +1,4 @@
+import { KeyCode } from './key-data';
 import { SearchLayoutsByTagsVariables } from './types';
 
 // NOTE: modify this to alter how many layouts are fetched at once
@@ -14,7 +15,7 @@ export const searchLatoutsByTagsVariables: SearchLayoutsByTagsVariables = {
 };
 
 // NOTE: modify this to change which key is chosen for the heat map
-export const keyCodeToAggregate: string = 'KC_ENTER';
+export const keyCodeToAggregate: KeyCode = KeyCode.KC_ENTER;
 
 // NOTE: modify this to change which layout is printed for `yarn print-layout`
 export const layoutToPrint: string = 'xbJpL';
