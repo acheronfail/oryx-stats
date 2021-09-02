@@ -1,10 +1,30 @@
 import fs from 'fs';
 import { layoutToPrint } from './options';
-import { GetLayoutResponse, Revision } from './types';
+import { GetLayoutResponse, LayerKey, Revision } from './types';
 import { padCenter, moonlanderAsciiMapWidth, moonlanderAsciiMap } from './utils';
-
+import { KeyData } from './key-data';
 
 const stripRegex = /^KC_(AUDIO_)?|_T$/g;
+
+function isLayerKey(key: LayerKey) {
+  return [
+    'LM',
+    'LOWER_OSL',
+    'LOWER_TG',
+    'LOWER_TT',
+    'LOWER',
+    'LT',
+    'MO',
+    'OSL',
+    'RAISE_OSL',
+    'RAISE_TG',
+    'RAISE_TT',
+    'TG',
+    'TO',
+    'TT',
+  ].includes(key.code);
+}
+
 const createKeyLabel = (revision: Revision, layerIdx: number, keyIdx: number) => {
   const key = revision.layers[layerIdx].keys[keyIdx];
   const isDualFuncModifier = key.code.endsWith('_T');
@@ -30,11 +50,11 @@ const createKeyLabel = (revision: Revision, layerIdx: number, keyIdx: number) =>
           }
         }
       default:
-        label = key.code.replace(stripRegex, '');
+        label = KeyData[key.code]?.label ?? key.code.replace(stripRegex, '');
     }
   }
 
-  if (['MO', 'TT', 'TO'].includes(key.code) && typeof key.layer === 'number') {
+  if (isLayerKey(key) && typeof key.layer === 'number') {
     label += `-${key.layer}`;
   }
   if (isDualFuncModifier && key.command) {
@@ -50,7 +70,6 @@ const generateLayerMaps = (revision: Revision) =>
       '\n' +
       layer.keys.reduce(
         (s, _, keyIdx) =>
-          // ⃠
           s.replace(new RegExp(`(\\s+#)${keyIdx}(\\s+)`), (match) =>
             padCenter(createKeyLabel(revision, layerIdx, keyIdx).slice(0, match.length), match.length)
           ),
@@ -60,10 +79,12 @@ const generateLayerMaps = (revision: Revision) =>
 
 (async function () {
   const layouts: GetLayoutResponse[] = JSON.parse(await fs.promises.readFile('layouts.json', 'utf-8'));
-  const layout = layouts.find(layout => layout.Layout.hashId == layoutToPrint);
+  const layout = layouts.find((layout) => layout.Layout.hashId == layoutToPrint);
   if (!layout) {
     throw new Error(`Failed to find layout with hash id: ${layoutToPrint}!`);
   }
 
-  generateLayerMaps(layout.Layout.revision).reverse().forEach((map) => console.log(map));
+  generateLayerMaps(layout.Layout.revision)
+    .reverse()
+    .forEach((map) => console.log(map));
 })();

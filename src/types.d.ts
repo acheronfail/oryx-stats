@@ -1,5 +1,7 @@
 // Thanks to https://app.quicktype.io/
 
+import { KeyCode } from "./key-data";
+
 export interface SearchLayoutsByTagsVariables {
   start:     number;
   tags:      string[];
@@ -106,7 +108,7 @@ export interface Layer {
 
 export interface LayerKey {
   os:            null | string;
-  code:          string;
+  code:          KeyCode;
   about:         null;
   color:         null;
   dance?:        Dance | null;
