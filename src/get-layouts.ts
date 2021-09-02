@@ -70,6 +70,12 @@ const gqlGetLayoutQuery = gql`
     searchLayoutsByTags: { layouts: layoutSummaries },
   }: SearchLayoutsByTagsResponse = JSON.parse(await fs.promises.readFile('layout-summaries.json', 'utf-8'));
 
+  if (await fs.promises.stat('layouts.json').catch(() => false)) {
+    console.log('Looks like you have already downloaded the layouts, so skipping redownloading them');
+    console.log('If you want to redownload them again, just delete the layouts.json file!');
+    return;
+  }
+
   // Fetch in batches
   const layouts: GetLayoutResponse[] = [
     // NOTE: add in the default one as a special one
@@ -94,6 +100,6 @@ const gqlGetLayoutQuery = gql`
     console.log(`Fetched: ${layouts.length}/${layoutSummaries.length}`);
 
     // Defensively save the layouts in case we get rate limited or there are other errors, etc
-    await fs.promises.writeFile('layouts2.json', JSON.stringify(layouts, null, 2));
+    await fs.promises.writeFile('layouts.json', JSON.stringify(layouts, null, 2));
   }
 })();
